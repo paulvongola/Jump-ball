@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b6bfe2d79046e7f429673ba0d60f3694
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: dda12f74ff9116a42b23482252b2c482, type: 3}
+  _instancesCopy:
+  - {fileID: 11400000, guid: 4af3736ffb6d5ed45825087c492b1053, type: 2}
+  - {fileID: 11400000, guid: 0e807f8d0a748064998c0137bb08037c, type: 2}
+  _fileAsset: {fileID: 6013892654665635331, guid: b6bfe2d79046e7f429673ba0d60f3694, type: 3}
+  _assetPath: Assets/Materials/stylized_lava_cracked.sbsar
