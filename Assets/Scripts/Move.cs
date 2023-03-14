@@ -9,7 +9,26 @@ public class Move : MonoBehaviour
 
     private Rigidbody _rigidbody;
 
-    public float speed;
+   
+    public float normalspeed;  //vitesse de base
+    
+    public float speed; // vitesse actuel
+
+    public float speedbonusMultiplicator= 1.5f;
+
+    public float bonusTime = 4f;
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Acceleration")
+        {
+            // action déclencher qui est accélérer la vitesse
+
+            speed = normalspeed * speedbonusMultiplicator;
+
+        }
+    }
+
+
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
