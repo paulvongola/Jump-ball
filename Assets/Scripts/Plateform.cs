@@ -1,40 +1,39 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using TMPro;
 public class Plateform : MonoBehaviour
 {
     [SerializeField] GameObject[] plateformePrefabs;
 
-    [SerializeField] private int nbPlateform = 100; // Représente le nb de plateformes
-    [SerializeField] private float xmin = -3f; //Xmin c'est pour la marge gauche
-    [SerializeField] private float xmax = 3f; //Xmax c'est pour la marge droite
+    [SerializeField] private int nbPlateform; // Représente le nb de plateformes
+    [SerializeField] private float xmin = 2f; //Xmin c'est pour la marge gauche
+    [SerializeField] private float xmax = -2f; //Xmax c'est pour la marge droite
     [SerializeField] private float zoffset = 0f;
-   
-     [SerializeField] private float z_plateformInc = 10f ; // c'est la taille de la plateforme pour éviter le chauvement
+    [SerializeField] private float yoffset = 0f;
+
+    private float z_plateformInc = 2.5f + 0.2f; // c'est la taille de la plateforme pour éviter le chauvement
 
 
 
-   
+
 
 
     void Start()
     {
-      // tant que i est égal zéro est que i est inférieur au nb de plateformes on continue
+        // tant que i est égal zéro est que i est inférieur au nb de plateformes on continue
 
-        for (int i = 0; i < nbPlateform; i++)
+        // Instantiate a number of platforms equal to total_number, starting from the second one
+        for (int i = 1; i < nbPlateform; i++)
         {
-            //x offset représente la marge entre les plateformes
+            //randomizing x_offset of the platform
             float x_offset = Random.Range(xmin, xmax);
-            // ici on instancie une plateforme aléatoirement dans une position donner
-            Instantiate(plateformePrefabs[Random.Range(0, plateformePrefabs.Length)], new Vector3(x_offset, 0, zoffset + z_plateformInc + 6f), Quaternion.identity); ;
+            //Instantiate the prefab
+            Instantiate(plateformePrefabs[Random.Range(0, 2)], new Vector3(x_offset, yoffset, zoffset + z_plateformInc), Quaternion.identity);
+            // update the z_offset
             zoffset += z_plateformInc;
-
-
         }
+
     }
 
-   
 
-  
+
+
 }
