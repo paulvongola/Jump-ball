@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -5,43 +6,49 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    // Start is called before the first frame update
 
-    private Rigidbody _rigidbody;
+    [SerializeField] private float jumpPower;
 
-   
-    public float normalspeed;  //vitesse de base
-    
-    public float speed; // vitesse actuel
+    [Range(0f, 10f)]
+    [SerializeField] private float jumpDuration;
 
-    public float speedbonusMultiplicator= 1.5f;
+    private bool isStart = false;
 
-    public float bonusTime = 4f;
-    private void OnCollisionEnter(Collision collision)
+    // récuperation de la pos du pouce 
+    private Vector3 touchPosition;
+
+    private bool isJumping = false;
+    Sequence jumping;
+
+    private void Update()
     {
-        if (collision.gameObject.tag == "Acceleration")
+
+        if (Input.touchCount > 0)
         {
-            // action déclencher qui est accélérer la vitesse
+            isStart = true;
+            touchPosition = Input.GetTouch(0).position;
+            touchPosition.z = 10f;
+            touchPosition = Camera.main.ScreenToWorldPoint(touchPosition);
 
-            speed = normalspeed * speedbonusMultiplicator;
-
+            transform.DOMoveX(touchPosition.x - transform.position.x, Time.deltaTime).SetRelative(true).From();
         }
+
+        Jumping();
+
     }
 
 
-    void Start()
+    void Jumping()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        if (isJumping || !isStart)
+            return;
+        isJumping = true;
+        jumping = transform.DOJump(new Vector3(0, 0, 5f), jumpPower, 1, jumpDuration).SetEase(Ease.Linear).SetRelative(true);
+        jumping.OnComplete(stateJump);
     }
 
-    // Update is called once per frame
-    void Update()
+    void stateJump()
     {
-        if (Input.GetAxis("Horizontal") != 0f || Input.GetAxis("Vertical") != 0f)
-        {
-            _rigidbody.AddForce(Input.GetAxis("Horizontal") * 0.5f, 0f, Input.GetAxis("Vertical"));
-        }
-
-        transform.Translate(0, 0, 1 * speed * Time.deltaTime); // L'avancement de la ball. Pour qu'elle se déplace seule
+        isJumping = false;
     }
 }

@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private TMP_Text _scoreText;
     public delegate void MessageEvent();
-    public static event MessageEvent ObjetToucher;
+    //public static event MessageEvent ObjetToucher;
 
     void Start()
     {
@@ -23,30 +23,27 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetAxis("Horizontal") != 0f || Input.GetAxis("Vertical") != 0f)
-        {
-            _rigidbody.AddForce(Input.GetAxis("Horizontal") * 0.5f, 0f, Input.GetAxis("Vertical"));
-        }
+        _scoreText.text = "Score : " + ScoreValue;
     }
 
-  /*  private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Target_Trigger"))
+        if (other.gameObject.CompareTag("Plateau"))
         {
             Destroy(other.gameObject);
-            ObjetToucher.Invoke();
+            //ObjetToucher.Invoke();
 
         }
-    }*/
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Target") || (collision.gameObject.CompareTag("Plateau")))
         {
-            /*Instantiate(flame, collision.transform.position, Quaternion.identity);*/
-            Destroy(collision.gameObject);
+           
+            Destroy(collision.gameObject, 3f);
             UpdateScore(collision);
-            ObjetToucher.Invoke();
+            //ObjetToucher.Invoke();
         }
     }
     private void UpdateScore(Collision col)
@@ -57,11 +54,7 @@ public class Player : MonoBehaviour
 
             ScoreValue++;
         }
-        else
-        {
-            ScoreValue--;
-        }
-        _scoreText.text = "Score : " + ScoreValue;
+     
 
 
     }
